@@ -8,4 +8,5 @@ if __name__ == "__main__":
     parsers.add_argument('--threads', type=int, default=4)
     parsers.add_argument('--lr', type=float, default=1e-3)
     parsers.add_argument('--threads', type=int, default=4)
+    parsers.add_argument('--seed', type=int, default=42)
     parsers.add_argument('--epochs', type=int, default=200)
