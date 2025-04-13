@@ -39,16 +39,16 @@ class CiFar10_Dataset(Dataset):
         self.test_indices = list(range(len(self.cifar10_test)))
         self.train_indices = list(range(len(self.cifar10_train)))
         self.query_dataset, self.train_dataset, self.database_dataset = self.create_dataset()
-            
-    def __len__(self):
-        return len(self.train_dataset)
     
     def create_dataset(self):
         query_indices = random.sample(self.test_indices, self.query_size)
-        query_dataset = TransformSubset(self.cifar10_test, query_indices, transform=self.query_transform)
+        train_indices = random.sample(self.train_indices, self.train_size)
         
         remaining_test_indices = [i for i in self.test_indices if i not in query_indices]
-        remaining_train_indices = [i for i in self.train_indices if i not in self.hash_train_indices]
+        remaining_train_indices = [i for i in self.train_indices if i not in train_indices]
+        
+        query_dataset = TransformSubset(self.cifar10_test, query_indices, transform=self.query_transform)
+        
         database_test_dataset = TransformSubset(
             self.cifar10_train, remaining_test_indices, transform=self.database_transform
         )
@@ -60,9 +60,23 @@ class CiFar10_Dataset(Dataset):
             database_test_dataset
         ])
         
-        train_indices = random.sample(self.train_indices, self.train_size)
+        
         train_dataset = TransformSubset(
             self.cifar10_train, train_indices, transform=self.train_transform
         )
         
         return query_dataset, train_dataset, database_dataset
+    
+    def __len__(self):
+        if self.mode == "train":
+            return len(self.train_dataset)
+        if self.mode == "query":
+            return len(self.query_dataset)
+        return len(self.database_dataset)
+    
+    def __getitem__(self, index):
+        if self.mode == "train":
+            return self.train_dataset[index]
+        if self.mode == "query":
+            return self.query_dataset[index]
+        return self.database_dataset[index]
