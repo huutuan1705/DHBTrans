@@ -1,0 +1,195 @@
+# ==================
+# Python Standard
+# ==================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+*.egg-info/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg
+MANIFEST          # Usually created by setup.py
+
+# PyInstaller
+# Usually these files are written by a python script from a template
+# before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/            # Nếu bạn không muốn commit file media được upload
+
+# Flask stuff:
+instance/         # Thư mục instance của Flask
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# =====================
+# Virtual Environments
+# =====================
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*/ENV/
+*/venv/
+*/.venv/
+*/.env/
+
+# ======================
+# IDE / Editor configs
+# ======================
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*#
+.#*
+
+# Ctags
+.tags
+tags
+
+# ==================
+# OS Files
+# ==================
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+# Icon must end with two \r. Network locations
+Icon?
+._*
+# Thumbnail cache files
+.Spotlight-V100
+.Trashes
+ehthumbs.db # Windows thumbnail cache
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# =====================
+# Secrets / Credentials
+# =====================
+# !! Cẩn thận !! Đảm bảo bạn không commit file chứa thông tin nhạy cảm
+# .env thường được dùng cho biến môi trường và nên được ignore
+# secrets.*
+*.pem
+*.key
+# config.py đôi khi chứa secrets, xem xét cẩn thận nếu cần ignore
+# credentials.*
+# *.token
+
+# =====================
+# Notebooks
+# =====================
+.ipynb_checkpoints
+
+# =====================
+# Other Tools
+# =====================
+# Mypy cache
+.mypy_cache/
+
+# Ruff cache
+.ruff_cache/
+
+# Celery stuff
+celerybeat-schedule.*
+
+# Static Analysis
+pylint.rc
+.pylintrc
+flake8.rc
+.flake8
+
+# =====================
+# Data (Optional)
+# =====================
+# Nếu bạn có file dữ liệu lớn, hãy xem xét dùng Git LFS hoặc không commit chúng
+# *.csv
+# *.json
+# *.xml
+# *.dat
+# data/
+models/
+# =====================
+# Logs (Optional)
+# =====================
+logs/
+*.log
+*.log.*
+
+process_csv.py
