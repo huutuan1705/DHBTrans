@@ -20,8 +20,8 @@ def compute_result(model, dataloader):
 
 def evaluate(model, query_dataloader, db_dataloader):
     model.eval()
-    query_binaries, query_labels = compute_result(query_dataloader)
-    db_binaries, db_labels = compute_result(db_dataloader)
+    query_binaries, query_labels = compute_result(model, query_dataloader)
+    db_binaries, db_labels = compute_result(model, db_dataloader)
     
     AP = []
     db_size = torch.arange(1, db_binaries.size(0) + 1)
