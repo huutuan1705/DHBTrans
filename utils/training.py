@@ -11,7 +11,7 @@ def compute_result(model, dataloader):
     with torch.no_grad():
         for _, batch_data in enumerate(tqdm(dataloader)):
             images = batch_data[0].to(device)
-            label = batch_data[1]
+            label = batch_data[1].to(device)
             output = model(images)
             
             outputs.append(output)
@@ -29,7 +29,7 @@ def evaluate(model, query_dataloader, db_dataloader):
     for i in range(query_binaries.size(0)):
         query_label, query_binary = query_labels[i], query_binaries[i]
         _, query_result = torch.sum((query_binary != db_binaries).long(), dim=1).sort()
-        correct = (query_label == db_labels[query_result]).float()
+        correct = (query_label == db_labels[query_result].to(device)).float()
         precision = torch.cumsum(correct, dim=0) / db_size
         AP.append(torch.sum(precision*correct) / torch.sum(correct))
     
