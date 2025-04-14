@@ -1,3 +1,4 @@
+import torch
 import argparse
 import torch.utils.data as data
 
@@ -9,6 +10,8 @@ from dataset.image_net import ImageNet_Dataset
 from utils.training import training
 from models.model import DHBTrans
 from losses.dhbtrans_loss import DHBLoss
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def get_dataloader(args):
     datasets = {
@@ -46,8 +49,8 @@ if __name__ == "__main__":
     args = parsers.parse_args()
     
     train_dataloader, query_dataloader, db_dataloader = get_dataloader(args)
-    model = DHBTrans(args)
-    dhb_loss = DHBLoss(args)
+    model = DHBTrans(args).to(device)
+    dhb_loss = DHBLoss(args).to(device)
     optimizer = optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     
     training(model, train_dataloader, query_dataloader, db_dataloader, optimizer, dhb_loss, args)
