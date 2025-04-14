@@ -17,7 +17,7 @@ def compute_result(model, dataloader):
             outputs.append(output)
             labels.append(label)
     
-    return torch.sign(torch.cat(images)), torch.cat(labels)
+    return torch.sign(torch.cat(outputs)), torch.cat(labels)
 
 def evaluate(model, query_dataloader, db_dataloader):
     model.eval()
@@ -42,23 +42,23 @@ def training(model, train_dataloader, query_dataloader, db_dataloader, optimizer
         print(f"Epoch: {epoch+1} / {args.epochs}")
         mean_loss = 0
         count = 0
-        for _, batch_data in enumerate(tqdm(train_dataloader)):
-            model.train()
-            optimizer.zero_grad()
+        # for _, batch_data in enumerate(tqdm(train_dataloader)):
+        #     model.train()
+        #     optimizer.zero_grad()
             
-            images = batch_data[0].to(device)
-            labels = batch_data[1]
-            output = model(images)
-            similarity = compute_similarity_matrix(labels)
+        #     images = batch_data[0].to(device)
+        #     labels = batch_data[1]
+        #     output = model(images)
+        #     similarity = compute_similarity_matrix(labels)
         
-            loss = dhb_loss(output, similarity)
-            mean_loss += loss.item()
-            loss.backward()
-            optimizer.step()
-            count += 1
+        #     loss = dhb_loss(output, similarity)
+        #     mean_loss += loss.item()
+        #     loss.backward()
+        #     optimizer.step()
+        #     count += 1
             
-        mean_loss = mean_loss / count   
-        print('Training loss: {:.4f}'.format(mean_loss)) 
+        # mean_loss = mean_loss / count   
+        # print('Training loss: {:.4f}'.format(mean_loss)) 
         
         if epoch % args.checkpoint == 0:
             mAP = evaluate(model, query_dataloader, db_dataloader)
