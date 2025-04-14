@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 from utils.hamming import compute_inner_product
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 class DHBLoss(nn.Module):
     def __init__(self, args):
         super(DHBLoss, self).__init__()
@@ -28,9 +30,9 @@ class DHBLoss(nn.Module):
         return loss
 
     def forward(self, h_matrix, similarity):
-        gamma = self.args.gamma
-        lamda = self.args.lamda 
-        alpha = self.args.alpha 
+        gamma = torch.tensor(self.args.gamma, device=device)
+        lamda = torch.tensor(self.args.lamda, device=device) 
+        alpha = torch.tensor(self.args.alpha, device=device) 
         
         loss = self.ce_loss(h_matrix, similarity) + gamma*self.mse_loss(h_matrix, similarity, self.args.q) \
             + lamda*self.quantization_loss(h_matrix) + alpha*self.hash_balance_loss(h_matrix)
