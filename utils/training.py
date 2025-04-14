@@ -73,7 +73,7 @@ def training(model, train_dataloader, query_dataloader, db_dataloader, optimizer
         mean_loss = mean_loss / count   
         print('Training loss: {:.4f}'.format(mean_loss)) 
         
-        if epoch % args.checkpoint == 0:
+        if (epoch+1) % args.checkpoint == 0:
             mAP = evaluate(model, query_dataloader, db_dataloader)
             print('Mean Average Precision(mAP): {:.4f}'.format(mAP)) 
             if mAP >= best_mAP:
