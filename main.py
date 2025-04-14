@@ -39,7 +39,7 @@ if __name__ == "__main__":
     parsers.add_argument('--q', type=float, default=0.1)
     
     parsers.add_argument('--batch_size', type=int, default=16)
-    parsers.add_argument('--step_size', type=int, default=12)
+    parsers.add_argument('--step_size', type=int, default=8)
     parsers.add_argument('--threads', type=int, default=4)
     parsers.add_argument('--lr', type=float, default=1e-3)
     parsers.add_argument('--weight_decay', type=float, default=1e-5)
