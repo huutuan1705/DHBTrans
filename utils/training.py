@@ -54,7 +54,7 @@ def training(model, train_dataloader, query_dataloader, db_dataloader, optimizer
             mean_loss += loss.item()
             loss.backward()
             optimizer.step()
-            coutn += 1
+            count += 1
             
         mean_loss = mean_loss / count   
         print('Training loss: {:.4f}'.format(mean_loss)) 
