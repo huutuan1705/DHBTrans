@@ -46,6 +46,8 @@ if __name__ == "__main__":
     parsers.add_argument('--seed', type=int, default=42)
     parsers.add_argument('--epochs', type=int, default=200)
     parsers.add_argument('--checkpoint', type=int, default=10)
+    parsers.add_argument('--load_pretrained', type=bool, default=False)
+    parsers.add_argument('--pretrained_dir', type=str, default="./../")
     
     args = parsers.parse_args()
     
@@ -53,5 +55,8 @@ if __name__ == "__main__":
     model = DHBTrans(args).to(device)
     dhb_loss = DHBLoss(args).to(device)
     optimizer = optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
+    
+    if args.load_pretrained:
+        model.load_state_dict(torch.load(args.pretrained_dir))
     
     training(model, train_dataloader, query_dataloader, db_dataloader, optimizer, dhb_loss, args)
