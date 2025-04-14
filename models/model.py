@@ -10,8 +10,8 @@ class DHBTrans(nn.Module):
         self.linear = nn.Linear(1024, args.bit_size)
         
     def forward(self, x):
-        x = self.vit(x)
+        outputs = self.vit(x)
+        x = outputs.last_hidden_state[:, 0, :]  # <-- get represented feature
         x = self.relu(x)
         x = self.linear(x)
-        
         return x
