@@ -8,7 +8,6 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 def compute_result(model, dataloader):
     model.eval()
     outputs, labels = [], []
-    count = 0
     with torch.no_grad():
         for _, batch_data in enumerate(tqdm(dataloader)):
             images = batch_data[0].to(device)
@@ -17,10 +16,7 @@ def compute_result(model, dataloader):
             
             outputs.append(output)
             labels.append(label)
-            count += 1
-            if count == 100:
-                break
-    
+            
     return torch.sign(torch.cat(outputs)), torch.cat(labels)
 
 def evaluate(model, query_dataloader, db_dataloader):
