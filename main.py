@@ -24,8 +24,8 @@ def get_dataloader(args):
     database_dataset = eval(datasets[args.dataset_name] + "(args, mode='database')")
     
     train_dataloader = data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=int(args.threads))
-    query_dataloader = data.DataLoader(query_dataset, batch_size=args.batch_size, shuffle=False, num_workers=int(args.threads))
-    db_dataloader = data.DataLoader(database_dataset, batch_size=args.batch_size, shuffle=False, num_workers=int(args.threads))
+    query_dataloader = data.DataLoader(query_dataset, batch_size=args.step_size, shuffle=False, num_workers=int(args.threads))
+    db_dataloader = data.DataLoader(database_dataset, batch_size=args.step_size, shuffle=False, num_workers=int(args.threads))
     
     return train_dataloader, query_dataloader, db_dataloader
 
@@ -39,6 +39,7 @@ if __name__ == "__main__":
     parsers.add_argument('--q', type=float, default=0.1)
     
     parsers.add_argument('--batch_size', type=int, default=16)
+    parsers.add_argument('--step_size', type=int, default=12)
     parsers.add_argument('--threads', type=int, default=4)
     parsers.add_argument('--lr', type=float, default=1e-3)
     parsers.add_argument('--weight_decay', type=float, default=1e-5)
