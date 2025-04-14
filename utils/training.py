@@ -8,13 +8,14 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 def compute_result(model, dataloader):
     model.eval()
     outputs, labels = [], []
-    for _, batch_data in enumerate(tqdm(dataloader)):
-        images = batch_data[0].to(device)
-        label = batch_data[1]
-        output = model(images)
-        
-        outputs.append(output)
-        labels.append(label)
+    with torch.no_grad():
+        for _, batch_data in enumerate(tqdm(dataloader)):
+            images = batch_data[0].to(device)
+            label = batch_data[1]
+            output = model(images)
+            
+            outputs.append(output)
+            labels.append(label)
     
     return torch.sign(torch.cat(images)), torch.cat(labels)
 
