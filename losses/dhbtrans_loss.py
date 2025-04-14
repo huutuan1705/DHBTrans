@@ -33,6 +33,8 @@ class DHBLoss(nn.Module):
         gamma = torch.tensor(self.args.gamma, device=device)
         lamda = torch.tensor(self.args.lamda, device=device) 
         alpha = torch.tensor(self.args.alpha, device=device) 
+        h_matrix = h_matrix.to(device)
+        similarity = similarity.to(device)
         
         loss = self.ce_loss(h_matrix, similarity) + gamma*self.mse_loss(h_matrix, similarity, self.args.q) \
             + lamda*self.quantization_loss(h_matrix) + alpha*self.hash_balance_loss(h_matrix)
