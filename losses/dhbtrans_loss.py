@@ -12,22 +12,22 @@ class DHBLoss(nn.Module):
     def ce_loss(self, h_matrix, similarity):
         omega = compute_inner_product(h_matrix)
         log_part = torch.log1p(torch.exp(omega))
-        return log_part - similarity * omega
+        return (log_part - similarity * omega).mean()
 
     def mse_loss(self, h_matrix, similarity, q):
         omega = compute_inner_product(h_matrix)
         diff = (omega + q) / 2 - similarity * q
         loss = torch.pow(diff, 2)
         
-        return loss
+        return loss.mean()
 
     def quantization_loss(self, h_matrix):
-        return torch.sum(torch.abs(torch.abs(h_matrix) - 1.0))
+        return torch.sum(torch.abs(torch.abs(h_matrix) - 1.0)).mean()
 
     def hash_balance_loss(self, h_matrix):
         bit_means = h_matrix.mean(dim=0)
         loss = torch.sum(bit_means ** 2)  # ||mean||^2
-        return loss
+        return loss.mean()
 
     def forward(self, h_matrix, similarity):
         gamma = torch.tensor(self.args.gamma, device=device)
