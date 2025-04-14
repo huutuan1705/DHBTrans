@@ -25,16 +25,25 @@ def evaluate(model, query_dataloader, db_dataloader):
     db_binaries, db_labels = compute_result(model, db_dataloader)
     
     AP = []
-    db_size = torch.arange(1, db_binaries.size(0) + 1)
+    db_size = torch.arange(1, db_binaries.size(0) + 1, device=device)
+    
+    query_binaries = query_binaries.to(device)
+    query_labels = query_labels.to(device)
+    db_binaries = db_binaries.to(device)
+    db_labels = db_labels.to(device)
+    
     for i in range(query_binaries.size(0)):
         query_label, query_binary = query_labels[i], query_binaries[i]
         _, query_result = torch.sum((query_binary != db_binaries).long(), dim=1).sort()
         correct = (query_label == db_labels[query_result].to(device)).float()
         precision = torch.cumsum(correct, dim=0) / db_size
-        AP.append(torch.sum(precision*correct) / torch.sum(correct))
+        if torch.sum(correct) > 0:
+            AP.append(torch.sum(precision * correct) / torch.sum(correct))
+        else:
+            AP.append(torch.tensor(0.0, device=device))
     
-    mAP = torch.mean(AP)
-    return mAP
+    mAP = torch.mean(torch.stack(AP))
+    return mAP.item()
 
 def training(model, train_dataloader, query_dataloader, db_dataloader, optimizer, dhb_loss, args):
     best_mAP = 0
